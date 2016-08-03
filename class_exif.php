@@ -107,5 +107,47 @@ class Exif
 		return $thumbnail;
 	}
 	
+	public function removeExif ($i)
+	{
+		if (!isset($i))
+		{
+			return false;
+		}
+		if (is_string($i) == false)
+		{
+			return false;
+		}
+		if (is_file($i) == false)
+		{
+			return false;
+		}
+		// check if gd is installed
+		if (null !== gd_info())
+		{
+			if (is_array(gd_info()))
+			{
+				// remove exif recreating the image
+				$ext = pathinfo($i, PATHINFO_EXTENSION);
+				if ($ext == 'jpg' || $ext == 'jpeg')
+				{
+					$img = imagecreatefromjpeg($i);
+					imagejpeg($img,$i,100);
+				}
+				else
+				{
+					return true; // done! 
+				}
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 	
 }

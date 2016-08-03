@@ -3,6 +3,15 @@ require_once('class_exif.php');
 
 $e = new Exif();
 
+if (isset($_GET['rexif']))
+{
+	$e->removeExif('elliot.jpg');
+}
+else
+{
+	echo '<h1>Add ?rexif to url to remove exif.</h1>';
+}
+
 echo '<img src="elliot.jpg">';
 
 echo '<h2>Image Type</h2>';
@@ -43,11 +52,10 @@ if ($tagName != false)
 	echo $tagName;
 }
 
-echo '<h2>Image thumbnail below but jpg does not support it (?). Change image to see effects.</h2>';
+echo '<h2>Image thumbnail</h2>';
 $thumbnail = $e->getExifThumbnail('elliot.jpg');
 if ($thumbnail != false)
 {
 	echo $thumbnail;
 }
-
 ?>
